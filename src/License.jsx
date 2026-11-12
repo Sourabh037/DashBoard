@@ -54,7 +54,7 @@ const calculateDuration = (startDate, startTime, endDate, endTime) => {
 
 // Read permanent clients saved by Client.jsx
 
-const License = () => {
+const License = ({ initialClient, onContinue }) => {
   // Steps
   const steps = ["Client", "License", "Send"];
 
@@ -64,7 +64,7 @@ const License = () => {
 
   // Load permanent clients from Client.jsx
   const { clients, generateLicense, deleteClient } = useLicenses();
-  const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedClient, setSelectedClient] = useState(initialClient || null);
 
   // License progress
   // Client is already completed (1/3)
@@ -134,22 +134,24 @@ const License = () => {
     const licenseData = {
       id: Date.now(),
       client: selectedClient,
+      clientId: selectedClient.id,
       issueDate,
       issueTime,
       expiryDate,
       expiryTime,
       duration,
-      status: "Pending",
+      status: "pending",
     };
 
-    // Complete License step (2/3)
-    setLicenseCompleted(true);
-
-    // Open Generate License portal through parent component
-    // Move license to GenerateLicense.jsx
+    // Save pending license in context
     generateLicense(licenseData);
 
+    setLicenseCompleted(true);
+
     alert("License details saved successfully!");
+
+    // Automatically open Generate Licenses
+    onContinue?.(licenseData);
   };
 
   return (

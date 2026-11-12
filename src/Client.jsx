@@ -50,7 +50,7 @@ const readStorage = (key) => {
   }
 };
 
-const Client = () => {
+const Client = ({ onClientSaved }) => {
   const steps = ["Client", "License", "Send"];
   const { addClient } = useLicenses();
   // Progress starts at 0%
@@ -249,10 +249,10 @@ const Client = () => {
       status: "pending_license",
     };
 
-    // Add client to shared permanent client list
+    // Save client permanently
     addClient(clientData);
 
-    // Remove temporary draft after permanent save
+    // Remove temporary draft
     if (selectedDraftId !== null) {
       setDraftClients((prev) =>
         prev.filter((draft) => draft.id !== selectedDraftId),
@@ -263,9 +263,11 @@ const Client = () => {
     setPermanentClientId(permanentId);
     setSelectedDraftId(null);
     setClientCompleted(true);
-    setCurrentStep(0);
 
     alert("Client permanently saved successfully!");
+
+    // Automatically open License page
+    onClientSaved?.(clientData);
   };
 
   // Select permanent client or temporary draft
@@ -449,9 +451,11 @@ const Client = () => {
                 >
                   <div
                     className={`flex h-9 w-9 items-center justify-center rounded-full ${
-                      completed
+                      index === 0
                         ? "bg-blue-600 text-white"
-                        : "bg-blue-600 text-white"
+                        : completed
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-200 text-gray-500"
                     }`}
                   >
                     {completed ? <Check size={20} /> : index + 1}
@@ -643,15 +647,6 @@ const Client = () => {
                 Save & Continue to License
               </button>
             </>
-          )}
-
-          {currentStep === 0 && permanentClientId && (
-            <button
-              onClick={handleAddClient}
-              className="mt-5 w-full rounded-lg bg-blue-600 px-8 py-2 font-semibold text-white hover:bg-blue-700"
-            >
-              Add New Client
-            </button>
           )}
         </div>
       )}

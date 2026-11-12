@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, ChevronDown, Check, X } from "lucide-react";
 
 import { useLicenses } from "./context/useLicenses";
@@ -21,7 +21,7 @@ const calculateDuration = (startDate, startTime, endDate, endTime) => {
   return `${days} Days, ${hours} Hours, ${minutes} Minutes`;
 };
 
-const GenerateLicense = () => {
+const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
   const steps = ["Client", "License", "Send"];
 
   const {
@@ -30,6 +30,9 @@ const GenerateLicense = () => {
     updateClient,
     updatePendingLicense,
     sendLicense,
+    deleteClient,
+    generateLicense,
+    removePendingLicense,
   } = useLicenses();
 
   const [currentStep, setCurrentStep] = useState(2);
@@ -38,9 +41,24 @@ const GenerateLicense = () => {
   const [clientOpen, setClientOpen] = useState(false);
   const [search, setSearch] = useState("");
 
-  const [selectedLicenseId, setSelectedLicenseId] = useState(null);
-  const [selectedClient, setSelectedClient] = useState(null);
-  const [localLicense, setLocalLicense] = useState(null);
+  const [selectedLicenseId, setSelectedLicenseId] = useState(
+    initialLicense?.id || null,
+  );
+
+  const [selectedClient, setSelectedClient] = useState(() =>
+    initialLicense?.client
+      ? {
+          ...initialLicense.client,
+          printers: (initialLicense.client.printers || []).map((printer) => ({
+            ...printer,
+          })),
+        }
+      : null,
+  );
+
+  const [localLicense, setLocalLicense] = useState(() =>
+    initialLicense ? { ...initialLicense } : null,
+  );
 
   // Always display the editable local license data.
   const selectedLicense = localLicense;
@@ -51,6 +69,71 @@ const GenerateLicense = () => {
 
     return (client?.name || "").toLowerCase().includes(search.toLowerCase());
   });
+
+  // Delete from Generate Licenses dropdown
+  const handleRemoveLicense = (license) => {
+    const confirmed = window.confirm(
+      license.isRemake
+        ? "Remove this remake license from the list? The expired record will remain."
+        : "Permanently delete this client and all associated licenses?",
+    );
+
+    if (!confirmed) return;
+
+    if (license.isRemake) {
+      // Remove only the remake entry
+      removePendingLicense(license.id);
+    } else {
+      // Permanently delete new/existing client
+      deleteClient(license.clientId);
+    }
+
+    if (selectedLicenseId === license.id) {
+      setSelectedLicenseId(null);
+      setSelectedClient(null);
+      setLocalLicense(null);
+      setCurrentStep(2);
+      setIsEditing(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!remakeRequest?.requestId) return;
+
+    const clientCopy = {
+      ...remakeRequest.client,
+      printers: (remakeRequest.client.printers || []).map((printer) => ({
+        ...printer,
+      })),
+    };
+
+    const newLicenseId = remakeRequest.license.id;
+
+    const remakePendingLicense = {
+      ...remakeRequest.license,
+      client: clientCopy,
+      clientId: clientCopy.id,
+      isRemake: true,
+    };
+
+    generateLicense(remakePendingLicense);
+
+    const timer = setTimeout(() => {
+      setSelectedLicenseId(newLicenseId);
+      setSelectedClient(clientCopy);
+      setLocalLicense(remakePendingLicense);
+
+      setCurrentStep(2);
+      setIsEditing(true);
+
+      setClientOpen(false);
+      setSearch("");
+
+      onRemakeLoaded?.();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [remakeRequest, generateLicense, onRemakeLoaded]);
 
   // Select pending license
   const handleSelectLicense = (license) => {
@@ -282,21 +365,35 @@ const GenerateLicense = () => {
                   license.client;
 
                 return (
-                  <button
+                  <div
                     key={license.id}
-                    onClick={() => handleSelectLicense(license)}
-                    className="w-full border-b px-4 py-3 text-left hover:bg-gray-50"
+                    className="flex items-center border-b hover:bg-gray-50"
                   >
-                    <p className="font-semibold">
-                      {client?.name || "Unnamed Client"}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Region: {client?.region || "Not provided"}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Printers: {client?.printers?.length || 0}
-                    </p>
-                  </button>
+                    <button
+                      onClick={() => handleSelectLicense(license)}
+                      className="min-w-0 flex-1 px-4 py-3 text-left"
+                    >
+                      <p className="font-semibold">
+                        {client?.name || "Unnamed Client"}
+                      </p>
+
+                      <p className="text-sm text-gray-500">
+                        Region: {client?.region || "Not provided"}
+                      </p>
+
+                      <p className="text-sm text-gray-500">
+                        Printers: {client?.printers?.length || 0}
+                      </p>
+                    </button>
+
+                    <button
+                      onClick={() => handleRemoveLicense(license)}
+                      title="Delete client"
+                      className="mr-3 rounded-full p-2 text-red-500 hover:bg-red-100 hover:text-red-700"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
                 );
               })
             )}
@@ -519,3 +616,4 @@ const GenerateLicense = () => {
 };
 
 export default GenerateLicense;
+

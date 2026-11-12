@@ -1,4 +1,4 @@
-import { ShieldUser, Bell, UserRound } from "lucide-react";
+import { ShieldUser, Bell } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -16,6 +16,7 @@ const Navbar = () => {
         <button>
           <Bell size={25} />
         </button>
+        
       </div>
     </nav>
   );

@@ -87,6 +87,13 @@ export const LicenseProvider = ({ children }) => {
     );
   };
 
+  // Remove only from Generate Licenses list
+  const removePendingLicense = (licenseId) => {
+    setPendingLicenses((prev) =>
+      prev.filter((license) => license.id !== licenseId),
+    );
+  };
+
   // Move client from License to Generate License
   const generateLicense = (licenseData) => {
     const clientId = licenseData.client.id;
@@ -131,16 +138,27 @@ export const LicenseProvider = ({ children }) => {
 
     // Prevent duplicate active licenses
     setActiveLicenses((prev) => {
-      const exists = prev.some((item) => item.clientId === license.clientId);
+      // Find an existing non-expired active license
+      const existingActive = prev.find((item) => {
+        if (item.clientId !== license.clientId || item.status !== "active") {
+          return false;
+        }
 
-      if (exists) {
+        const daysLeft = getDaysLeft(item);
+
+        return daysLeft !== null && daysLeft >= 0;
+      });
+
+      // Update an existing unexpired license if one exists
+      if (existingActive) {
         return prev.map((item) =>
-          item.clientId === license.clientId
+          item.id === existingActive.id
             ? { ...license, status: "active" }
             : item,
         );
       }
 
+      // Otherwise preserve the expired record and add the new license
       return [...prev, { ...license, status: "active" }];
     });
 
@@ -176,7 +194,7 @@ export const LicenseProvider = ({ children }) => {
   const pendingClientCount = clients.filter(
     (client) => client.status === "pending_license",
   ).length;
-  
+
   // Total expired licenses
   const totalExpiredCount = activeLicenses.filter((license) => {
     const daysLeft = getDaysLeft(license);
@@ -221,6 +239,8 @@ export const LicenseProvider = ({ children }) => {
         generateLicense,
         updatePendingLicense,
         sendLicense,
+
+        removePendingLicense,
 
         totalClients,
         pendingClientCount,
