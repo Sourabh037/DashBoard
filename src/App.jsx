@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Home from "./Home";
@@ -7,6 +7,7 @@ import License from "./License";
 import GenerateLicense from "./GenerateLicense";
 import History from "./History";
 import { LicenseProvider } from "./context/LicenseContext";
+import ProfileFloatingPanel from "./ProfileFloatingPanel";
 
 const App = () => {
   const [activePage, setActivePage] = useState("Home");
@@ -18,6 +19,8 @@ const App = () => {
   const [licenseForGenerate, setLicenseForGenerate] = useState(null);
 
   const [remakeRequest, setRemakeRequest] = useState(null);
+
+  const [showProfile, setShowProfile] = useState(false);
 
   const handleRemake = (request) => {
     setRemakeRequest(request);
@@ -32,6 +35,19 @@ const App = () => {
     setActivePage(page);
   };
 
+  // Dark mood
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("licensehub-theme") === "dark";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("licensehub-theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
+  useEffect(() => {
+    localStorage.setItem("licensehub-theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
   // Client -> License
   const handleClientSaved = (client) => {
     setClientForLicense(client);
@@ -45,39 +61,51 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Navbar />
+    <div className={darkMode ? "dark" : ""}>
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <Navbar />
 
-      <LicenseProvider>
-        <div className="flex min-h-screen bg-gray-100">
-          <Sidebar activePage={activePage} onNavigate={handleNavigate} />
+        <LicenseProvider>
+          <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+            <Sidebar
+              activePage={activePage}
+              onNavigate={handleNavigate}
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+              onProfileDetails={() => setShowProfile(true)}
+            />
 
-          <main className="min-w-0 flex-1">
-            {activePage === "Home" && <Home />}
+            <main className="min-w-0 flex-1">
+              {activePage === "Home" && <Home />}
 
-            {activePage === "Client" && (
-              <Client onClientSaved={handleClientSaved} />
-            )}
+              {activePage === "Client" && (
+                <Client onClientSaved={handleClientSaved} />
+              )}
 
-            {activePage === "License" && (
-              <License
-                initialClient={clientForLicense}
-                onContinue={handleLicenseSaved}
-              />
-            )}
+              {activePage === "License" && (
+                <License
+                  initialClient={clientForLicense}
+                  onContinue={handleLicenseSaved}
+                />
+              )}
 
-            {activePage === "Generate Licenses" && (
-              <GenerateLicense
-                initialLicense={licenseForGenerate}
-                remakeRequest={remakeRequest}
-                onRemakeLoaded={() => setRemakeRequest(null)}
-              />
-            )}
+              {activePage === "Generate Licenses" && (
+                <GenerateLicense
+                  initialLicense={licenseForGenerate}
+                  remakeRequest={remakeRequest}
+                  onRemakeLoaded={() => setRemakeRequest(null)}
+                />
+              )}
 
-            {activePage === "History" && <History onRemake={handleRemake} />}
-          </main>
-        </div>
-      </LicenseProvider>
+              {activePage === "History" && <History onRemake={handleRemake} />}
+              
+              {showProfile && (
+                <ProfileFloatingPanel onClose={() => setShowProfile(false)} />
+              )}
+            </main>
+          </div>
+        </LicenseProvider>
+      </div>
     </div>
   );
 };

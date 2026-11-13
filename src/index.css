@@ -1,1 +1,125 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+/* ==================================
+   LICENSEHUB GLOBAL DARK MODE
+================================== */
+
+/* Main backgrounds */
+.dark .bg-white {
+  background-color: #1f2937 !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: #273449 !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #111827 !important;
+}
+
+.dark .bg-gray-200 {
+  background-color: #374151 !important;
+}
+
+.dark .bg-gray-300 {
+  background-color: #4b5563 !important;
+}
+
+/* Text visibility */
+.dark .text-black {
+  color: #ffffff !important;
+}
+
+.dark .text-gray-800 {
+  color: #f9fafb !important;
+}
+
+.dark .text-gray-700 {
+  color: #e5e7eb !important;
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+.dark .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+/* Borders */
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-gray-400 {
+  border-color: #4b5563 !important;
+}
+
+/* Inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Disabled inputs */
+.dark input:disabled,
+.dark textarea:disabled,
+.dark select:disabled {
+  background-color: #374151 !important;
+  color: #d1d5db !important;
+}
+
+/* Dropdowns and popups */
+.dark .shadow-md,
+.dark .shadow-xl,
+.dark .shadow-sm {
+  --tw-shadow-color: #000000;
+}
+
+/* Table header remains dark */
+.dark .bg-gray-700 {
+  background-color: #374151 !important;
+}
+
+/* Hover effects */
+.dark .hover\:bg-gray-50:hover {
+  background-color: #374151 !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: #374151 !important;
+}
+
+/* Search and form containers */
+.dark .bg-transparent {
+  color: #f9fafb;
+}
+
+/* Keep blue buttons and highlights visible */
+.dark .bg-blue-600 {
+  background-color: #2563eb;
+}
+
+.dark .text-blue-600 {
+  color: #60a5fa;
+}
+
+/* Dark mode page background */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #111827;
+}

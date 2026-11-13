@@ -130,75 +130,109 @@ const Home = () => {
   if (!showFile) {
     return (
       <div className="p-4">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Dashboard
+        </h1>
 
-        <h3 className="m-2">Welcome back! Here's your license overview.</h3>
+        <h3 className="m-2 text-gray-700 dark:text-gray-200">
+          Welcome back! Here's your license overview.
+        </h3>
 
         <div className="flex w-full min-w-0 items-center gap-2">
           <button
             onClick={() => openCategory("Total Clients")}
-            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left"
+            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           >
             <Users size={35} className="text-blue-600" />
-            <h3 className="font-semibold">Total Clients</h3>
-            <p className="mt-2 text-2xl font-bold">{totalClients}</p>
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              Total Clients
+            </h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {totalClients}
+            </p>
           </button>
 
           <button
             onClick={() => openCategory("Active License")}
-            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left"
+            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           >
             <StickyNoteCheck size={35} className="text-green-600" />
-            <h3 className="font-semibold">Active License</h3>
-            <p className="mt-2 text-2xl font-bold">{activeLicenseCount}</p>
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              Active License
+            </h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {activeLicenseCount}
+            </p>
           </button>
         </div>
 
         <div className="mt-2 flex w-full min-w-0 items-center gap-2">
           <button
             onClick={() => openCategory("Expiring Soon")}
-            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left"
+            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           >
             <Clock10 size={35} className="text-red-500" />
-            <h3 className="font-semibold">Expiring Soon</h3>
-            <p className="mt-2 text-2xl font-bold">{expiringSoonCount}</p>
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              Expiring Soon
+            </h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {expiringSoonCount}
+            </p>
           </button>
 
           <button
             onClick={() => openCategory("Pending License")}
-            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left"
+            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-6 text-left dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           >
             <MessageCircleDashedCheck size={35} className="text-green-400" />
-            <h3 className="font-semibold">Pending License</h3>
-            <p className="mt-2 text-2xl font-bold">{pendingLicenseCount}</p>
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              Pending License
+            </h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {pendingLicenseCount}
+            </p>
           </button>
         </div>
 
         {/* License Overview */}
-        <div className="my-4 box-border rounded-lg border border-gray-200 bg-white px-3 py-4">
-          <h2 className="font-semibold">License Overview</h2>
-
+        <div className="my-4 box-border rounded-lg border border-gray-200 bg-white px-3 py-4 dark:border-gray-600 dark:bg-gray-800">
+          <h2 className="font-semibold text-gray-900 dark:text-white">
+            License Overview
+          </h2>
           <div className="mt-3 flex justify-between">
-            <span className="text-gray-600">Total Clients</span>
-            <span className="font-semibold">{totalClients}</span>
+            <span className="text-gray-600 dark:text-gray-200">
+              Total Clients
+            </span>
+            <span className="font-semibold text-gray-900 dark:text-white">
+              {totalClients}
+            </span>
           </div>
 
           <div className="mt-2 flex justify-between">
-            <span className="text-gray-600">Pending Clients</span>
-            <span className="font-semibold">{pendingClientCount}</span>
+            <span className="text-gray-600 dark:text-gray-200">
+              Pending Clients
+            </span>
+            <span className="font-semibold text-gray-900 dark:text-white">
+              {pendingClientCount}
+            </span>
           </div>
 
           <div className="mt-2 flex justify-between">
-            <span className="text-gray-600">Total Expired</span>
-            <span className="font-semibold">{totalExpiredCount}</span>
+            <span className="text-gray-600 dark:text-gray-200">
+              Total Expired
+            </span>
+            <span className="font-semibold text-gray-900 dark:text-white">
+              {totalExpiredCount}
+            </span>
           </div>
         </div>
 
         {/* Recent Activity */}
-        <div className="my-4 box-border rounded-lg border border-gray-200 bg-white px-2 py-4">
-          <h2 className="font-semibold">Recent Activity</h2>
-
-          <p className="mt-3 text-sm text-gray-500">
+        <div className="my-4 box-border rounded-lg border border-gray-200 bg-white px-3 py-4 dark:border-gray-600 dark:bg-gray-800">
+          <h2 className="font-semibold text-gray-900 dark:text-white">
+            Recent Activity
+          </h2>
+          <p className="text-gray-600 dark:text-gray-200">
             Your license activity will appear here.
           </p>
         </div>
@@ -212,8 +246,10 @@ const Home = () => {
       {/* Headline and Back */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">{selectedCategory}</h1>
-          <p className="m-2 text-gray-500">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {selectedCategory}
+          </h1>
+          <p className="m-2 text-gray-500 dark:text-gray-200">
             All available clients ({filteredClients.length})
           </p>
         </div>
@@ -245,7 +281,7 @@ const Home = () => {
       {/* Client List */}
       <div className="mt-4 space-y-3">
         {filteredClients.length === 0 ? (
-          <p className="rounded-lg bg-white p-5 text-center text-gray-500">
+          <p className="rounded-lg border border-gray-200 bg-white p-4 text-gray-900 dark:text-white">
             No clients found.
           </p>
         ) : (
@@ -262,7 +298,7 @@ const Home = () => {
                 className="rounded-lg border border-gray-200 bg-white p-4"
               >
                 <div className="mb-3 flex items-center justify-between">
-                  <h3 className="font-bold">
+                  <h3 className="font-bold text-gray-900 dark:text-white">
                     {index + 1}. {client.name || "Unnamed Client"}
                   </h3>
 
@@ -279,7 +315,7 @@ const Home = () => {
                   )}
                 </div>
 
-                <div className="space-y-2 text-sm">
+                <div className="space-y-2 text-sm text-gray-700 dark:text-gray-200">
                   <p>
                     <span className="font-semibold">Region:</span>{" "}
                     {client.region || "Not provided"}

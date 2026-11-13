@@ -265,8 +265,13 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
       {/* Headline */}
       <div className="flex items-center p-2">
         <div>
-          <h1 className="text-2xl font-bold">Generate License</h1>
-          <p className="m-2">Review the Information Before Finalizing</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Generate License
+          </h1>
+
+          <p className="m-2 text-gray-700 dark:text-gray-200">
+            Review the Information Before Finalizing
+          </p>
         </div>
       </div>
 
@@ -322,7 +327,7 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
             className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left"
           >
             <div>
-              <p className="font-semibold text-gray-400">
+              <p className="font-semibold text-gray-500 dark:text-gray-200">
                 Pending License Clients
               </p>
               <p className="font-medium text-gray-800">
@@ -339,7 +344,7 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
               placeholder="Search client..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-transparent outline-none"
+              className="w-full bg-transparent text-gray-900 outline-none placeholder:text-gray-400 dark:text-white dark:placeholder:text-gray-400"
             />
             <button
               onClick={() => {
@@ -353,7 +358,7 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
         )}
 
         {clientOpen && (
-          <div className="absolute left-0 right-0 top-full z-30 mt-2 max-h-60 overflow-y-auto rounded-lg border bg-white shadow-md">
+          <div className="absolute left-0 right-0 top-full z-30 mt-2 max-h-60 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-600 dark:bg-gray-800">
             {filteredLicenses.length === 0 ? (
               <p className="p-3 text-sm text-gray-500">
                 No pending licenses found
@@ -373,15 +378,15 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
                       onClick={() => handleSelectLicense(license)}
                       className="min-w-0 flex-1 px-4 py-3 text-left"
                     >
-                      <p className="font-semibold">
+                      <p className="font-semibold text-gray-900 dark:text-white">
                         {client?.name || "Unnamed Client"}
                       </p>
 
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-200">
                         Region: {client?.region || "Not provided"}
                       </p>
 
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-200">
                         Printers: {client?.printers?.length || 0}
                       </p>
                     </button>
@@ -403,8 +408,10 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
 
       {/* CLIENT INFORMATION */}
       {selectedClient && (
-        <div className="mx-4 my-4 rounded-xl border bg-white p-4">
-          <h2 className="mb-4 text-xl font-semibold">Client Information</h2>
+        <div className="mx-4 my-4 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-600 dark:bg-gray-800">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+            Client Information
+          </h2>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {[
@@ -433,7 +440,9 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
           </div>
 
           {/* PRINTER INFORMATION */}
-          <h3 className="mb-3 mt-5 font-semibold">Printer Information</h3>
+          <h3 className="mb-3 mt-5 font-semibold text-gray-900 dark:text-white">
+            Printer Information
+          </h3>
 
           {(selectedClient.printers || []).map((printer, index) => (
             <div
@@ -459,7 +468,9 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
                 className="mb-2 w-full rounded-lg border p-2 disabled:bg-gray-50"
               />
 
-              <label className="text-sm text-gray-500">Serial Number</label>
+              <label className="text-sm text-gray-900 dark:text-white">
+                Serial Number
+              </label>
               <input
                 disabled={!isEditing}
                 value={printer.serialNumber || ""}
@@ -483,13 +494,17 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
       {/* LICENSE INFORMATION */}
       {selectedLicense && selectedClient && (
         <div className="mx-4 my-4 rounded-xl border border-gray-200 bg-white p-4">
-          <h3 className="text-xl font-semibold">License Information</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+            License Information
+          </h3>
 
           <p className="mt-1 text-sm text-gray-500">
             Client: {selectedClient.name}
           </p>
 
-          <h3 className="mb-2 mt-5 font-semibold">Issue Date & Time</h3>
+          <h3 className="mb-2 mt-5 font-semibold text-gray-900 dark:text-white">
+            Issue Date & Time
+          </h3>
 
           <div className="flex gap-3">
             <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2">
@@ -501,7 +516,7 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
                 onChange={(e) =>
                   handleLicenseChange("issueDate", e.target.value)
                 }
-                className="w-full min-w-0 bg-transparent outline-none"
+                className="w-full min-w-0 bg-transparent outline-none dark:border-gray-500 dark:bg-gray-700 dark:text-white"
               />
             </div>
 
@@ -514,12 +529,14 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
                 onChange={(e) =>
                   handleLicenseChange("issueTime", e.target.value)
                 }
-                className="w-full min-w-0 bg-transparent outline-none"
+                className="w-full min-w-0 bg-transparent outline-none dark:border-gray-500 dark:bg-gray-700 dark:text-white"
               />
             </div>
           </div>
 
-          <h3 className="mb-2 mt-5 font-semibold">Expiry Date & Time</h3>
+          <h3 className="mb-2 mt-5 font-semibold text-gray-900 dark:text-white">
+            Expiry Date & Time
+          </h3>
 
           <div className="flex gap-3">
             <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2">
@@ -532,7 +549,7 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
                 onChange={(e) =>
                   handleLicenseChange("expiryDate", e.target.value)
                 }
-                className="w-full min-w-0 bg-transparent outline-none"
+                className="w-full min-w-0 bg-transparent outline-none dark:border-gray-500 dark:bg-gray-700 dark:text-white"
               />
             </div>
 
@@ -545,12 +562,12 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
                 onChange={(e) =>
                   handleLicenseChange("expiryTime", e.target.value)
                 }
-                className="w-full min-w-0 bg-transparent outline-none"
+                className="w-full min-w-0 bg-transparent outline-none dark:border-gray-500 dark:bg-gray-700 dark:text-white"
               />
             </div>
           </div>
 
-          <p className="mt-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-700">
+          <p className="mt-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-700 dark:border dark:border-blue-400 dark:bg-blue-950 dark:text-blue-200">
             Duration:{" "}
             {calculateDuration(
               selectedLicense.issueDate,
@@ -616,4 +633,3 @@ const GenerateLicense = ({ remakeRequest, onRemakeLoaded, initialLicense }) => {
 };
 
 export default GenerateLicense;
-

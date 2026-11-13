@@ -159,9 +159,13 @@ const License = ({ initialClient, onContinue }) => {
       <div className="p-4">
         {/* Headline */}
         <div className="mb-4">
-          <h1 className="text-2xl font-bold">License</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            License
+          </h1>
 
-          <p className="m-2">Configure License Validity For Your Client</p>
+          <p className="m-2 text-gray-700 dark:text-gray-200">
+            Configure License Validity For Your Client
+          </p>
         </div>
 
         {/* Main Section */}
@@ -173,11 +177,11 @@ const License = ({ initialClient, onContinue }) => {
             </span>
 
             <div className="px-4">
-              <h3 className="text-xl font-semibold text-black">
+              <h3 className="text-xl font-semibold text-black dark:text-white">
                 Select Client
               </h3>
 
-              <p className="text-black">
+              <p className="text-black dark:text-gray-200">
                 Choose a Client Saved in the Client Section
               </p>
             </div>
@@ -189,7 +193,7 @@ const License = ({ initialClient, onContinue }) => {
             {!clientOpen ? (
               <button
                 onClick={() => setClientOpen(true)}
-                className="flex w-full items-center justify-between rounded-lg bg-gray-100 px-4 py-3 text-left"
+                className="flex w-full items-center justify-between rounded-lg bg-gray-100 px-4 py-3 text-left dark:bg-gray-700"
               >
                 <div>
                   <h3 className="text-sm font-semibold text-gray-400">
@@ -324,19 +328,21 @@ const License = ({ initialClient, onContinue }) => {
           </div>
 
           {/* LICENSE VALIDITY */}
-          <div className="mx-4 my-2 mt-6 rounded-lg border border-gray-200 bg-white p-4">
-            <h3 className="text-xl font-semibold">License Validity</h3>
-
-            <p className="mt-1 text-sm text-gray-500">
+          <div className="mx-4 my-2 mt-6 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-600 dark:bg-gray-800">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              License Validity
+            </h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-200">
               Set the exact start and end of the license period.
             </p>
 
             {/* ISSUE DATE */}
-            <h2 className="my-2 text-lg font-semibold">Issue Date & Time</h2>
-
+            <h2 className="my-2 text-lg font-semibold text-gray-900 dark:text-white">
+              Issue Date & Time
+            </h2>
             <div className="m-2 flex gap-3">
-              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2">
-                <p className="text-sm text-gray-400">Date</p>
+              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2 dark:bg-gray-700">
+                <p className="text-sm text-gray-400 dark:text-gray-200">Date</p>
 
                 <input
                   type="date"
@@ -346,8 +352,8 @@ const License = ({ initialClient, onContinue }) => {
                 />
               </div>
 
-              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2">
-                <p className="text-sm text-gray-400">Time</p>
+              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2 dark:bg-gray-700">
+                <p className="text-sm text-gray-400 dark:text-gray-200">Time</p>
 
                 <input
                   type="time"
@@ -359,11 +365,13 @@ const License = ({ initialClient, onContinue }) => {
             </div>
 
             {/* EXPIRY DATE */}
-            <h2 className="my-2 text-lg font-semibold">Expiry Date & Time</h2>
+            <h2 className="my-2 text-lg font-semibold text-gray-900 dark:text-white">
+              Expiry Date & Time
+            </h2>
 
             <div className="m-2 flex gap-3">
-              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2">
-                <p className="text-sm text-gray-400">Date</p>
+              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2 dark:bg-gray-700">
+                <p className="text-sm text-gray-400 dark:text-gray-200">Date</p>
 
                 <input
                   type="date"
@@ -374,8 +382,8 @@ const License = ({ initialClient, onContinue }) => {
                 />
               </div>
 
-              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2">
-                <p className="text-sm text-gray-400">Time</p>
+              <div className="min-w-0 flex-1 rounded-lg bg-gray-50 p-2 dark:bg-gray-700">
+                <p className="text-sm text-gray-400 dark:text-gray-200">Time</p>
 
                 <input
                   type="time"
@@ -387,20 +395,21 @@ const License = ({ initialClient, onContinue }) => {
             </div>
 
             {/* LICENSE DURATION */}
-            <div className="my-3 flex min-w-full items-center rounded-lg bg-gray-50 p-4">
+            <div className="my-3 flex min-w-full items-center rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
               <div className="flex items-center gap-2 rounded-lg">
                 <CalendarClock className="shrink-0 text-blue-600" />
 
-                <h2 className="font-semibold">License Duration</h2>
+                <h2 className="font-semibold text-gray-900 dark:text-white">
+                  License Duration
+                </h2>
               </div>
 
-              <div className="ml-auto text-right text-sm font-medium text-gray-600">
+              <div className="ml-auto text-right text-sm font-medium text-gray-600 dark:text-gray-100">
                 {duration}
               </div>
             </div>
           </div>
 
-          {/* BUTTONS */}
           {/* BUTTONS */}
           <div className="my-2 flex justify-end p-4">
             <button

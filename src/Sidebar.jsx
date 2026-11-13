@@ -23,9 +23,14 @@ const menuItems = [
   { name: "History", icon: History },
 ];
 
-const Sidebar = ({ onNavigate, activePage }) => {
+const Sidebar = ({
+  activePage,
+  onNavigate,
+  darkMode,
+  setDarkMode,
+  onProfileDetails,
+}) => {
   const [openProfile, setOpenProfile] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   return (
     <aside className="flex min-h-screen w-1/4 min-w-48 flex-col border-r border-gray-300 bg-gray-700 p-3">
@@ -59,24 +64,25 @@ const Sidebar = ({ onNavigate, activePage }) => {
       <div className="relative mt-auto">
         {/* Profile Dropdown - Opens Upward */}
         {openProfile && (
-          <div className="absolute bottom-full left-0 mb-3 w-full min-w-46 rounded-xl border border-gray-200 bg-white px-2 py-2 shadow-xl">
+          <div className="absolute bottom-full left-0 mb-4 w-full min-w-46 rounded-xl border border-gray-200 bg-white px-2 py-2 shadow-xl dark:border-gray-600 dark:bg-gray-800">
             {/* User Image and Name */}
-            <div className="flex flex-col items-center border-b border-gray-200 pb-4">
+            <div className="flex flex-col items-center border-b border-gray-200 pb-3">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
                 <UserRound size={35} className="text-blue-600" />
               </div>
 
-              <h2 className="mt-2 text-lg font-semibold text-gray-800">
+              <h2 className="mt-2 text-lg font-semibold text-gray-800 dark:text-white">
                 Sourabh
               </h2>
 
-              <p className="text-xs text-gray-500">Administrator</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Administrator
+              </p>
             </div>
-
             {/* Dark Mode */}
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="mt-3 flex w-full items-center justify-between rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-blue-100 hover:text-blue-700"
+              className="mt-3 flex w-full items-center justify-between rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-blue-100 hover:text-blue-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-blue-400"
             >
               <span className="flex items-center gap-3">
                 <Moon size={19} />
@@ -89,31 +95,28 @@ const Sidebar = ({ onNavigate, activePage }) => {
                 <ToggleLeft size={24} className="text-gray-400" />
               )}
             </button>
-
             {/* Profile Details */}
             <button
               onClick={() => {
                 setOpenProfile(false);
-                onNavigate("Profile Details");
+                onProfileDetails();
               }}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-blue-100 hover:text-blue-700"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-blue-400 hover:text-blue-700"
             >
               <User size={19} />
               Profile Details
             </button>
-
             {/* Settings */}
             <button
               onClick={() => {
                 setOpenProfile(false);
                 onNavigate("Settings");
               }}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-blue-100 hover:text-blue-700"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-blue-400 hover:text-blue-700"
             >
               <ShieldCog size={19} />
               Settings
             </button>
-
             {/* Logout */}
             <button
               onClick={() => {

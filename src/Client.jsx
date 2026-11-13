@@ -9,25 +9,19 @@ import {
 } from "lucide-react";
 import { useLicenses } from "./context/useLicenses";
 
-const FormField = ({
-  label,
-  placeholder,
-  value,
-  onChange,
-  type = "text",
-  maxLength,
-}) => {
+const FormField = ({ label, placeholder, value, onChange, type = "text" }) => {
   return (
-    <div className="mb-2 flex items-center">
-      <label className="w-24 pl-4 text-sm font-semibold">{label}</label>
+    <div className="mb-2 flex items-center gap-2">
+      <label className="w-24 pl-4 text-sm font-semibold text-gray-800 dark:text-white">
+        {label}
+      </label>
 
       <input
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        maxLength={maxLength}
-        className="min-w-0 flex-1 rounded-lg border px-2 py-2"
+        className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder:text-gray-400 outline-none dark:border-gray-500 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-300"
       />
     </div>
   );
@@ -320,19 +314,24 @@ const Client = ({ onClientSaved }) => {
     <div className="p-4">
       {/* Headline */}
       <div>
-        <h1 className="text-2xl font-bold">Client</h1>
-        <h3 className="m-2">Create License</h3>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Client
+        </h1>
+
+        <h3 className="m-2 text-gray-700 dark:text-gray-200">Create License</h3>
       </div>
 
       {/* Add Client / Client List / Country */}
       <div className="mb-5 mt-4 flex gap-4">
         {/* Add Client */}
         <button
-          className="flex items-center justify-between rounded-full border border-gray-200 bg-white px-4 py-2"
+          className="flex items-center justify-between rounded-full border border-gray-200 bg-white px-4 py-2 text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           onClick={handleAddClient}
         >
-          <h3 className="px-2 font-semibold">Add Client</h3>
-          <UserPlus size={18} />
+          <h3 className="px-2 font-semibold dark:border-gray-600 dark:bg-gray-800 dark:text-white">
+            Add Client
+          </h3>
+          <UserPlus size={18} className="text-gray-700 dark:text-white" />
         </button>
 
         {/* Searchable Client List */}
@@ -344,13 +343,18 @@ const Client = ({ onClientSaved }) => {
                 setClientListOpen(true);
                 setSearchTerm("");
               }}
-              className="flex w-full items-center justify-between rounded-full border border-gray-200 bg-white px-4 py-2"
+              className="flex w-full items-center justify-between rounded-full border border-gray-200 bg-white px-4 py-2 text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
             >
-              <h3 className="font-semibold">Client List</h3>
-              <ChevronDown size={18} className="text-gray-500" />
+              <h3 className="font-semibold dark:border-gray-600 dark:bg-gray-800 dark:text-white">
+                Client List
+              </h3>
+              <ChevronDown
+                size={18}
+                className="text-gray-500 dark:text-gray-200"
+              />
             </button>
           ) : (
-            <div className="flex w-full items-center gap-3 rounded-full border border-blue-400 bg-white px-4 py-2">
+            <div className="flex flex-1 items-center justify-between rounded-full border border-gray-200 bg-white px-4 py-2 text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
               <Search size={18} className="shrink-0 text-gray-500" />
 
               <input
@@ -367,7 +371,7 @@ const Client = ({ onClientSaved }) => {
                   setClientListOpen(false);
                   setSearchTerm("");
                 }}
-                className="text-gray-500 hover:text-black"
+                className="text-gray-800 hover:text-gray-500"
               >
                 <X size={18} />
               </button>
@@ -388,7 +392,7 @@ const Client = ({ onClientSaved }) => {
                     <div
                       key={draft.id}
                       className={`flex items-center justify-between border-b border-gray-100 px-4 py-3 hover:bg-gray-50 ${
-                        selectedDraftId === draft.id ? "bg-blue-50" : ""
+                        selectedDraftId === draft.id ? "bg-gray-100" : ""
                       }`}
                     >
                       <button
@@ -396,7 +400,7 @@ const Client = ({ onClientSaved }) => {
                         className="min-w-0 flex-1 text-left"
                       >
                         <div className="flex items-center gap-2">
-                          <p className="font-semibold">
+                          <p className="font-semibold text-gray-900 dark:text-white">
                             {draft.name || "Unnamed Client"}
                           </p>
 
@@ -405,11 +409,11 @@ const Client = ({ onClientSaved }) => {
                           </span>
                         </div>
 
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-200">
                           Region: {draft.region || "Not provided"}
                         </p>
 
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-200">
                           Printers: {draft.printers?.length || 0}
                         </p>
                       </button>
@@ -431,14 +435,16 @@ const Client = ({ onClientSaved }) => {
 
         {/* Country */}
         <button className="flex flex-1 items-center justify-between rounded-full border border-gray-200 bg-white px-4 py-2">
-          <h3 className="font-semibold">Country</h3>
-          <ChevronDown size={18} />
+          <h3 className="font-semibold dark:border-gray-600 dark:bg-gray-800 dark:text-white">
+            Country
+          </h3>
+          <ChevronDown size={18} className="text-gray-500 dark:text-gray-200" />
         </button>
       </div>
 
       {/* Main Form */}
       {isOpen && (
-        <div className="my-4 rounded-xl border border-gray-200 bg-white px-4 py-5">
+        <div className="my-4 rounded-xl border border-gray-200 bg-white px-4 py-5 dark:border-gray-600 dark:bg-gray-800">
           {/* Steps */}
           <div className="relative flex justify-between">
             {steps.map((step, index) => {
@@ -490,9 +496,10 @@ const Client = ({ onClientSaved }) => {
             <>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Client Details */}
-                <div className="rounded-lg bg-gray-50 p-2">
-                  <h3 className="p-2 font-semibold">License Information</h3>
-
+                <div className="rounded-lg bg-gray-50 p-2 dark:bg-gray-700">
+                  <h3 className="p-2 font-semibold text-gray-900 dark:text-white">
+                    License Information
+                  </h3>
                   <FormField
                     label="License"
                     placeholder="Enter License name"
@@ -501,7 +508,7 @@ const Client = ({ onClientSaved }) => {
                   />
 
                   <div className="mb-2 flex items-center gap-2">
-                    <label className="w-24 pl-4 text-sm font-semibold">
+                    <label className="w-24 pl-4 text-sm font-semibold text-gray-800 dark:text-gray-100">
                       Region
                     </label>
 
@@ -510,7 +517,7 @@ const Client = ({ onClientSaved }) => {
                         placeholder="Enter Region"
                         value={region}
                         onChange={(e) => setRegion(e.target.value)}
-                        className="w-full rounded-lg border px-3 py-2 pr-9"
+                        className="w-full rounded-lg border px-3 py-2 pr-9 dark:border-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
                       />
 
                       <ChevronDown
@@ -521,7 +528,7 @@ const Client = ({ onClientSaved }) => {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <label className="w-24 pl-4 text-sm font-semibold">
+                    <label className="w-24 pl-4 text-sm font-semibold text-gray-800 dark:text-gray-100">
                       Time Zone
                     </label>
 
@@ -530,7 +537,7 @@ const Client = ({ onClientSaved }) => {
                         placeholder="Enter Time Zone"
                         value={timeZone}
                         onChange={(e) => setTimeZone(e.target.value)}
-                        className="w-full rounded-lg border px-3 py-2 pr-9"
+                        className="w-full rounded-lg border px-3 py-2 pr-9 dark:border-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
                       />
 
                       <ChevronDown
@@ -543,7 +550,7 @@ const Client = ({ onClientSaved }) => {
 
                 {/* Contact Details */}
                 <div className="rounded-lg bg-gray-50 p-2">
-                  <h3 className="p-2 font-semibold">
+                  <h3 className="p-2 font-semibold text-gray-900 dark:text-white">
                     Client Contact Information
                   </h3>
 
@@ -591,7 +598,7 @@ const Client = ({ onClientSaved }) => {
                   className="my-4 rounded-xl bg-gray-50 px-4 py-2"
                 >
                   <div className="flex items-center justify-between py-2">
-                    <h3 className="font-semibold">Printer {index + 1}</h3>
+                    <h3 className="font-semibold dark:bg-gray-700 dark:text-white">Printer {index + 1}</h3>
 
                     {/* Remove Printer */}
                     <button
@@ -632,11 +639,14 @@ const Client = ({ onClientSaved }) => {
 
               {/* Add Printer */}
               <button
-                className="mt-4 flex items-center rounded-full bg-green-400 px-4 py-1 text-black"
+                className="mt-4 flex items-center rounded-full bg-green-400 px-4 py-1 text-black dark:bg-green-500 dark:text-white"
                 onClick={handleAddPrinter}
               >
                 Add Printer
-                <ListPlus size={30} className="pl-2" />
+                <ListPlus
+                  size={30}
+                  className="pl-2 text-black dark:text-white"
+                />
               </button>
 
               {/* Save Permanently and Continue */}
